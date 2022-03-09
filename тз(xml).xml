@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ISSPECS SYSTEM "ISSpecs.dtd">
+
+<ISSPECS>
+<DESCRIPTION>
+<TITLE>
+DeviceStore
+</TITLE>
+<SUBJ>
+Интернет-магазин электроники
+</SUBJ>
+</DESCRIPTION>
+
+<DATA>
+<ENTITY ent_id="User">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>email</PROPERTY>
+<PROPERTY>password</PROPERTY>
+<PROPERTY>role</PROPERTY>
+<PROPERTY>createdAt</PROPERTY>
+<PROPERTY>updatedAt</PROPERTY>
+</ENTITY>
+<ENTITY ent_id="Basket">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>userId</PROPERTY>
+<PROPERTY>createdAt</PROPERTY>
+<PROPERTY>updatedAt</PROPERTY>
+</ENTITY>
+<ENTITY ent_id="Brand">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>name</PROPERTY>
+<PROPERTY>createdAt</PROPERTY>
+<PROPERTY>updatedAt</PROPERTY>
+</ENTITY>
+<ENTITY ent_id="Type">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>name</PROPERTY>
+<PROPERTY>createdAt</PROPERTY>
+<PROPERTY>updatedAt</PROPERTY>
+</ENTITY>
+<ENTITY ent_id="Device">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>name</PROPERTY>
+<PROPERTY>price</PROPERTY>
+<PROPERTY>rating</PROPERTY>
+<PROPERTY>img</PROPERTY>
+<PROPERTY>typeId</PROPERTY>
+<PROPERTY>brandId</PROPERTY>
+</ENTITY>
+<ENTITY ent_ids="DeviceInfo">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>title</PROPERTY>
+<PROPERTY>description</PROPERTY>
+<PROPERTY>deviceId</PROPERTY>
+</ENTITY>
+<RELATIONSHIP ent_ids="TypeBrand">
+<PROPERTY>id</PROPERTY>
+<PROPERTY>typeId</PROPERTY>
+<PROPERTY>brandId</PROPERTY>
+</RELATIONSHIP>
+<CONSTRAINT>
+User: {
+id: NOT NULL PRIMARY KEY,
+email: NOT NULL,
+password: NOT NULL,
+role: NOT NULL,
+createdAt: NOT NULL,
+updatedAt: NOT NULL
+},
+Brand: {
+id: NOT NULL PRIMARY KEY,
+name: NOT NULL,
+createdAt: NOT NULL,
+updatedAt: NOT NULL
+},
+Type: {
+id: NOT NULL PRIMARY KEY,
+name: NOT NULL,
+createdAt: NOT NULL,
+updatedAt: NOT NULL
+},
+Device: {
+id: NOT NULL PRIMARY KEY,
+name: NOT NULL,
+price: NOT NULL,
+rating: NOT NULL,
+img: NOT NULL,
+typeId: NOT NULL, REFERENCES Type,
+brandId: NOT NULL, REFERENCES Brand,
+createdAt: NOT NULL,
+updatedAt: NOT NULL
+},
+
+DeviceInfo: {
+id: NOT NULL PRIMARY KEY,
+title: NOT NULL,
+description: NOT NULL,
+deviceId: NOT NULL, REFERENCES Device
+createdAt: NOT NULL,
+updatedAt: NOT NULL
+},
+
+</CONSTRAINT>
+</DATA>
+<ROLES>
+<ROLE>
+<TITLE>Гость</TITLE>
+<RESPONSIBILITY>Создать аккаунт, перейти на главную страницу магазина, искать товары по бренду и/или типу, 
+перейти на страницу конкретного товара.</RESPONSIBILITY>
+<TOTALUSERS>1</TOTALUSERS>
+</ROLE>
+<ROLE>
+<TITLE>Администратор</TITLE>
+<RESPONSIBILITY>Возможности гостя + добавление типов, брендов, товаров.</RESPONSIBILITY>
+<TOTALUSERS>1</TOTALUSERS>
+</ROLE>
+</ROLES>
+<TECHSPEC>
+<TYPE></TYPE>
+<DEVTOOLS>
+<DEV>Node js + Sequelize ORM Framework</DEV>
+</DEVTOOLS>
+<DBMS>
+<TITLE>PostgreSQL</TITLE>
+<VERSION>PostgreSQL 13</VERSION>
+<REASONING></REASONING>
+</DBMS>
+</TECHSPEC>
+</ISSPECS>
